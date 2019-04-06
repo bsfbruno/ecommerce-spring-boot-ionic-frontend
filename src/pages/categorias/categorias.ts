@@ -1,3 +1,4 @@
+import { CategoriaService } from './../../services/domain/categoria.service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
@@ -15,10 +16,24 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CategoriasPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public categoriaService: CategoriaService) {
   }
 
+  //esse evento chama as intruções dentro do método quando a página termina de ser carregada
   ionViewDidLoad() {
+    //o subscribe deve ser usado junto de uma função assíncrona, como é o caso do http
+    //esse método aguardar até que o retorno da chamada chegue
+    this.categoriaService.findAll().subscribe(
+      response => {
+        console.log(response);
+      }, 
+      error => {
+          console.log(error);
+      }
+    );
+
     console.log('ionViewDidLoad CategoriasPage');
   }
 
