@@ -13,4 +13,11 @@ export class HomePage {
 
   }
 
+  login(){
+    //empilhar a página
+    this.navCtrl.push('CategoriasPage');
+
+    //chama outra página e destói a primeira
+    this.navCtrl.setRoot('CategoriasPage');
+  }
 }
