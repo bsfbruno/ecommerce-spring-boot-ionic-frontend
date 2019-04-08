@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, IonicPage } from 'ionic-angular';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { CredenciaisDTO } from '../../models/credenciais.dto';
+import { AuthService } from '../../services/auth.service';
 
 //anotação utilizada para trabalhar com string e não precisar importar as classes
 @IonicPage()
@@ -16,7 +17,10 @@ export class HomePage {
     senha: ""
   };
 
-  constructor(public navCtrl: NavController, public menu: MenuController) {
+  constructor(
+    public navCtrl: NavController, 
+    public menu: MenuController,
+    public auth: AuthService) {
   }
 
   ionViewWillEnter() {
@@ -31,8 +35,13 @@ export class HomePage {
     //empilhar a página
     //this.navCtrl.push('CategoriasPage');
 
-    console.log(this.creds);
-    //chama outra página e destói a primeira
-    this.navCtrl.setRoot('CategoriasPage');
+    this.auth.authenticate(this.creds).subscribe(
+      response => {
+        //testa se está retornando o header
+        console.log(response.headers.get('Authorization'));
+        //chama outra página e destói a primeira
+        this.navCtrl.setRoot('CategoriasPage');
+      },
+      error => {});    
   }
 }

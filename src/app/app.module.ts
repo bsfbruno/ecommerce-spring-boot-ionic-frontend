@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import { CategoriaService } from './../services/domain/categoria.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,7 +31,8 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     //colocando o serviço aqui, ele é instanciado para toda a aplicação
     CategoriaService,
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    AuthService
   ]
 })
 export class AppModule {}
