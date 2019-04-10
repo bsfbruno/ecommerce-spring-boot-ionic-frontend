@@ -38,7 +38,7 @@ export class HomePage {
     this.auth.authenticate(this.creds).subscribe(
       response => {
         //testa se está retornando o header
-        console.log(response.headers.get('Authorization'));
+        this.auth.successfulLogin(response.headers.get('Authorization'));
         //chama outra página e destói a primeira
         this.navCtrl.setRoot('CategoriasPage');
       },
