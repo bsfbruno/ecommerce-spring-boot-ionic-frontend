@@ -3,7 +3,7 @@ import { STORAGE_KEYS } from "../config/storage_keys.config";
 import { LocalUser } from "../models/local_user";
 
 @Injectable()
-export class StorageService {
+export class StorageService {    
 
     getLocalUser(): LocalUser {
         let usr = localStorage.getItem(STORAGE_KEYS.localUser);
