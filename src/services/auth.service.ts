@@ -14,6 +14,17 @@ export class AuthService {
     constructor(public http: HttpClient, public storage: StorageService) {        
     }
 
+    refreshToken() {
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/auth/refresh_token`,
+            {},
+            {
+                //retornar o header da resposta
+                observe: 'response',
+                responseType: 'text'
+            });
+    }
+
     authenticate(creds: CredenciaisDTO) {
         return this.http.post(
             `${API_CONFIG.baseUrl}/login`,
@@ -22,7 +33,7 @@ export class AuthService {
                 //retornar o header da resposta
                 observe: 'response',
                 responseType: 'text'
-            })
+            });
     }
 
     successfulLogin(authrizationValue: string){
