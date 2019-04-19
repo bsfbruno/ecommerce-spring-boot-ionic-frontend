@@ -18,7 +18,7 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
-    //pegar o valor que foi passado como parãmetro que veio de categorias.ts na hora que chama ProdutosPage
+    //pegar o valor que foi passado como parametro que veio de categorias.ts na hora que chama ProdutosPage
     let categoria_id = this.navParams.get('categoria_id');
     this.produtoService.findByCategoria(categoria_id).subscribe(
       response => {
