@@ -1,9 +1,9 @@
 import { API_CONFIG } from './../../config/api.config';
 import { Injectable } from "@angular/core";
 import { Observable } from 'rxjs/Rx';
-import { ClienteDTO } from '../../models/cliente.dto';
 import { StorageService } from '../storage.service';
 import { HttpClient } from '@angular/common/http';
+import { ClienteDTO } from '../../models/cliente.dto';
 
 @Injectable()
 export class ClienteService {
@@ -11,8 +11,8 @@ export class ClienteService {
     constructor(public http: HttpClient, public storage: StorageService) {        
     }
 
-    findByEmail(email: string): Observable<ClienteDTO> {
-        return this.http.get<ClienteDTO>(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
+    findByEmail(email: string) /*retirar a tipagem do método para que todos os dados do backend sejam retornados*/ {
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
     }
 
     getImageFromBucket(id: string): Observable<any> {
