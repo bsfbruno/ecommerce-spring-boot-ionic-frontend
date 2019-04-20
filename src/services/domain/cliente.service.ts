@@ -11,6 +11,10 @@ export class ClienteService {
     constructor(public http: HttpClient, public storage: StorageService) {        
     }
 
+    findById(id: string) {
+        return this.http.get(`${API_CONFIG.baseUrl}/clientes/${id}`);
+    }
+
     findByEmail(email: string) /*retirar a tipagem do método para que todos os dados do backend sejam retornados*/ {
         return this.http.get(`${API_CONFIG.baseUrl}/clientes/email?value=${email}`);
     }
