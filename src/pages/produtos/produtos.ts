@@ -11,7 +11,8 @@ import { ProdutoDTO } from '../../models/produto.dto';
 })
 export class ProdutosPage {
 
-  items: ProdutoDTO[];
+  items: ProdutoDTO[] = [];//zerar a lista para fazer uma concatenacao de listas no infinite scroll
+  page: number = 0;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -27,11 +28,13 @@ export class ProdutosPage {
     //pegar o valor que foi passado como parametro que veio de categorias.ts na hora que chama ProdutosPage
     let categoria_id = this.navParams.get('categoria_id');
     let loader = this.presentLoading();
-    this.produtoService.findByCategoria(categoria_id).subscribe(
+    this.produtoService.findByCategoria(categoria_id, this.page, 10).subscribe(
       response => {
-        this.items = response['content'];//pega só o conteúdo do content
+        let start = this.items.length;
+        this.items = this.items.concat(response['content']);//pega só o conteúdo do content
+        let end = this.items.length - 1;
         loader.dismiss();//fechar o loader    
-        this.loadImageUrls();
+        this.loadImageUrls(start, end);
       },
       error => {
         loader.dismiss();
@@ -39,8 +42,8 @@ export class ProdutosPage {
     );
   }
 
-  loadImageUrls(){
-    for (var i=0; i<this.items.length; i++){
+  loadImageUrls(start: number, end: number){
+    for (var i=start; i<=end; i++ /*código para carregar as imagens do bucket apenas uma vez*/){
       let item = this.items[i];
       this.produtoService.getSmallImageFromBucket(item.id).subscribe(
         response => {
@@ -64,10 +67,20 @@ export class ProdutosPage {
   }
 
   doRefresh(event) {
+    this.page = 0;
+    this.items  = [];
     //insere o método que o load vai chamar depois de executar
     this.loadData();
     setTimeout(() => {
       event.complete();
+    }, 1000);
+  }
+
+  loadDataRefresh(event) {
+    this.page++;
+    this.loadData();
+    setTimeout(() => {
+      event.complete();    
     }, 1000);
   }
 }
