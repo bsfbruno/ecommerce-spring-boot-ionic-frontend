@@ -20,6 +20,10 @@ export class ProdutosPage {
   }
 
   ionViewDidLoad() {
+     this.loadData();
+  }
+
+  loadData() {
     //pegar o valor que foi passado como parametro que veio de categorias.ts na hora que chama ProdutosPage
     let categoria_id = this.navParams.get('categoria_id');
     let loader = this.presentLoading();
@@ -27,12 +31,12 @@ export class ProdutosPage {
       response => {
         this.items = response['content'];//pega só o conteúdo do content
         loader.dismiss();//fechar o loader    
-        this.loadImageUrls();    
+        this.loadImageUrls();
       },
       error => {
         loader.dismiss();
       }
-    );  
+    );
   }
 
   loadImageUrls(){
@@ -54,9 +58,16 @@ export class ProdutosPage {
   presentLoading() {
     let loader = this.loadCtrl.create({
       content: "Please Wait...",
-      duration: 3000
     });
     loader.present();
     return loader;
+  }
+
+  doRefresh(event) {
+    //insere o método que o load vai chamar depois de executar
+    this.loadData();
+    setTimeout(() => {
+      event.complete();
+    }, 1000);
   }
 }
