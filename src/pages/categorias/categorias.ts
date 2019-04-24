@@ -37,8 +37,10 @@ export class CategoriasPage {
       }, 
       error => {}
     );
+  }
 
-    console.log('ionViewDidLoad CategoriasPage');
+  showProdutos() {
+    this.navCtrl.push('ProdutosPage');
   }
 
 }
